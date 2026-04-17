@@ -1,3 +1,4 @@
+@model DashboardViewModel
 @{
     ViewData["Title"] = "Kavin Kumar - Web Full Stack Developer";
 }
@@ -208,7 +209,45 @@
     </div>
 </section>
 
-    @if (ViewBag.ShowMessage != null)
+<!-- Education Section -->
+@if (Model?.Educations?.Count > 0)
+{
+    <section id="education" class="section" style="background: var(--bg-secondary);">
+        <h2 class="section-title fade-up">Education</h2>
+        <p class="section-subtitle fade-up">Academic background</p>
+        <div class="card-grid">
+            @foreach (var education in Model.Educations)
+            {
+                <div class="card fade-up futuristic-card" style="border-radius: 24px; padding: 2rem;">
+                    <h3>@education.Degree</h3>
+                    <p>@education.InstitutionName</p>
+                    <p>Graduated: @education.GraduationYear</p>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<!-- Projects Section -->
+@if (Model?.Projects?.Count > 0)
+{
+    <section id="projects" class="section">
+        <h2 class="section-title fade-up">Projects</h2>
+        <p class="section-subtitle fade-up">My projects</p>
+        <div class="card-grid">
+            @foreach (var project in Model.Projects)
+            {
+                <div class="card fade-up futuristic-card" style="padding: 2rem;">
+                    <h3>@project.Title</h3>
+                    <p>@project.Description</p>
+                    <p>Technologies: @project.Technologies</p>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+@if (ViewBag.ShowMessage != null)
     {
         <div class="alert alert-info" style="margin-top: 2rem;">
             <i class="fas fa-info-circle"></i>
