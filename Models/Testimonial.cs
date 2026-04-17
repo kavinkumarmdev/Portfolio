@@ -1,11 +1,23 @@
-namespace kavinkumar.dev.Models;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-public class Testimonial
+namespace kavinkumar.dev.Models
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Position { get; set; }
-    public string Company { get; set; }
-    public string Message { get; set; }
-    public string ImageUrl { get; set; }
+    public class Testimonial
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string Content { get; set; } = string.Empty;
+
+        [Required]
+        public string AuthorName { get; set; } = string.Empty;
+
+        public string AuthorTitle { get; set; } = string.Empty;
+
+        public bool IsApproved { get; set; } = false;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+    }
 }

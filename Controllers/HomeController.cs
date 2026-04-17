@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using kavinkumar.dev.Models;
 using kavinkumar.dev.Data;
 
@@ -23,8 +24,8 @@ public class HomeController : Controller
             Certificates = PortfolioData.Certificates,
             Skills = PortfolioData.Skills,
             Experiences = PortfolioData.Experiences,
-            Testimonials = PortfolioData.Testimonials,
-            Messages = PortfolioData.Messages
+            Testimonials = new List<Testimonial>(), // Testimonials removed as requested
+            Messages = new List<ContactMessage>() 
         };
 
         return View(model);

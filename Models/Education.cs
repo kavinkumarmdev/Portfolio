@@ -1,11 +1,29 @@
-namespace kavinkumar.dev.Models;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-public class Education
+namespace kavinkumar.dev.Models
 {
-    public int Id { get; set; }
-    public string Degree { get; set; }
-    public string InstitutionName { get; set; }
-    public int GraduationYear { get; set; }
-    public decimal? CGPA { get; set; }
-    public string Location { get; set; }
+    public class Education
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string InstitutionName { get; set; } = string.Empty;
+
+        [Required]
+        public string Degree { get; set; } = string.Empty;
+
+        [Required]
+        public string FieldOfStudy { get; set; } = string.Empty;
+
+        public int GraduationYear { get; set; }
+
+        public decimal CGPA { get; set; }
+
+        public string Location { get; set; } = string.Empty;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    }
 }

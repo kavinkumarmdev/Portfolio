@@ -1,10 +1,26 @@
-namespace kavinkumar.dev.Models;
+using System;
+using System.ComponentModel.DataAnnotations;
 
-public class Certificate
+namespace kavinkumar.dev.Models
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public string IssuedBy { get; set; }
-    public DateTime IssueDate { get; set; }
-    public string CertificateUrl { get; set; }
+    public class Certificate
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        public string Title { get; set; } = string.Empty;
+
+        [Required]
+        public string IssuedBy { get; set; } = string.Empty;
+
+        public DateTime IssueDate { get; set; }
+
+        public string CertificateUrl { get; set; } = string.Empty;
+
+        public string Description { get; set; } = string.Empty;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime UpdatedAt { get; set; } = DateTime.Now;
+    }
 }
