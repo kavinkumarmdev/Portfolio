@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kavin Kumar - Web Full Stack Developer</title>
+    <link rel="icon" href="images/kavin.JPG" type="image/icon type">
+    <link rel="stylesheet" href="css/modern-design.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/theme-switcher.js" defer></script>
+    <style>
+        :root { --font-heading: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; }
+        body { font-family: var(--font-body); }
+        h1, h2, h3, h4, .navbar-brand { font-family: var(--font-heading); }
+        .social-sidebar { position: fixed; left: 2rem; bottom: 0; z-index: 1000; display: flex; flex-direction: column; gap: 1.5rem; align-items: center; }
+        .social-sidebar::after { content: ""; width: 1px; height: 80px; background: linear-gradient(to bottom, var(--primary), transparent); margin-top: 0.5rem; }
+        .social-sidebar a { color: var(--text-secondary); font-size: 1.25rem; transition: all 0.3s ease; }
+        .social-sidebar a:hover { color: var(--primary); transform: translateY(-5px); text-shadow: 0 0 10px rgba(99, 102, 241, 0.4); }
+        @media (max-width: 768px) { .social-sidebar { display: none; } }
+
+        /* DEVELOPER STUDIO HERO */
+        .hero-studio {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                        radial-gradient(circle at 10% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 40%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .studio-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .studio-info h2 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .studio-info h1 {
+            font-size: clamp(3rem, 7vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .name-accent {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .role-text {
+            color: var(--secondary);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .social-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* CODE TERMINAL WIDGET */
+        .terminal-widget {
+            background: #0f172a;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            position: relative;
+        }
+
+        .terminal-header {
+            background: rgba(255,255,255,0.05);
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-body {
+            padding: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #94a3b8;
+        }
+
+        .code-comment { color: #64748b; font-style: italic; }
+        .code-keyword { color: #f472b6; }
+        .code-string { color: #10b981; }
+        .code-property { color: #7dd3fc; }
+        .code-value { color: #fbbf24; }
+
+        .btn-studio-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 968px) {
+            .studio-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .social-row, .btn-studio-group {
+                justify-content: center;
+            }
+        }
+
+        /* Futuristic Card Styles */
+        .futuristic-card {
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .futuristic-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Animation classes */
+        .fade-up, .slide-left, .slide-right, .scale-in, .blur-in {
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .fade-up { transform: translateY(30px); }
+        .slide-left { transform: translateX(-30px); }
+        .slide-right { transform: translateX(30px); }
+        .scale-in { transform: scale(0.9); }
+        .visible {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <div class="custom-cursor" id="customCursor"></div>
+    
+    <div class="mesh-bg">
+        <div class="mesh-container">
+            <div class="mesh-ball ball-1"></div>
+            <div class="mesh-ball ball-2"></div>
+            <div class="mesh-ball ball-3"></div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <i class="fas fa-code"></i> KavinKumar.Dev
+        </a>
+        
+        <button class="nav-toggle" onclick="toggleNav()">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#education" class="nav-link">Education</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
+            <li><a href="#experience" class="nav-link">Experience</a></li>
+            <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#certificate" class="nav-link">Certificates</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+            <li>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button id="mode-toggle" class="btn btn-sm btn-secondary" title="Toggle Theme">
+                        <i class="fas fa-adjust"></i>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="social-sidebar">
+        <a href="https://wa.me/916383728267" target="_blank" title="WhatsApp" class="magnetic"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:kavinkumarm.dev@gmail.com" title="Email" class="magnetic"><i class="fas fa-envelope"></i></a>
+    </div>
+
+    <!-- Main Content -->
+    <main id="home">
+        <!-- Hero Section -->
+        <div class="hero-studio">
+            <div class="studio-container">
+                <!-- Left Side: Profile Info -->
+                <div class="studio-info fade-up">
+                    <span class="glow-text">Welcome to my universe</span>
+                    <h1>This is <span class="name-accent">KAVIN KUMAR</span>,<br/>
+                    I'm a <span class="role-text-animated"><span class="typing-line">Professional .NET Developer</span></span></h1>
+                    <p style="color: var(--text-secondary); font-size: 1.15rem; max-width: 550px; line-height: 1.7; margin-top: 1rem;">
+                        Architecting robust enterprise solutions with a focus on .NET 8, React, and high-performance SQL architectures.
+                    </p>
+                    <div class="btn-studio-group">
+                        <a href="#projects" class="btn btn-primary btn-glow">
+                            <i class="fas fa-rocket" style="margin-right: 8px;"></i> View My Work
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Get In Touch
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Code Terminal -->
+                <div class="terminal-wrap slide-right tilt-element">
+                    <div class="terminal-widget">
+                        <div class="terminal-header">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                            <span style="color: #64748b; font-size: 0.8rem; margin-left: 10px;">DeveloperProfile.cs</span>
+                        </div>
+                        <div class="terminal-body">
+                            <span class="code-keyword">public class</span> <span class="code-property">KavinKumar</span> {<br/>
+                            &nbsp;&nbsp;<span class="code-keyword">string</span> <span class="code-property">Role</span> = <span class="code-string">"Full Stack Developer"</span>;<br/>
+                            &nbsp;&nbsp;<span class="code-keyword">string[]</span> <span class="code-property">CoreStack</span> = { <span class="code-string">".NET 8"</span>, <span class="code-string">"React"</span>, <span class="code-string">"SQL"</span> };<br/>
+                            &nbsp;&nbsp;<span class="code-keyword">bool</span> <span class="code-property">HardWorker</span> = <span class="code-keyword">true</span>;<br/>
+                            &nbsp;&nbsp;<span class="code-keyword">bool</span> <span class="code-property">ExpertLearner</span> = <span class="code-keyword">true</span>;<br/>
+                            &nbsp;&nbsp;<span class="code-keyword">bool</span> <span class="code-property">ProblemSolver</span> = <span class="code-keyword">true</span>;<br/>
+                            &nbsp;&nbsp;<br/>
+                            &nbsp;&nbsp;<span class="code-keyword">public string</span> <span class="code-property">Hireable</span>() {<br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-property">HardWorker</span> && <span class="code-property">ProblemSolver</span> && <br/>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-property">CoreStack</span>.<span class="code-property">Length</span> >= <span class="code-value">3</span>;<br/>
+                            &nbsp;&nbsp;}<br/>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title fade-up">Technical Overview</h2>
+            <p class="section-subtitle fade-up">My methodology and professional journey</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <div class="slide-left">
+                    <h3 class="theme-heading" style="font-size: 1.8rem; margin-bottom: 1.5rem;">Bridging Logic with User Experience</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                        As a <strong style="color: var(--primary);">Web Full Stack Developer</strong>, I specialize in the end-to-end delivery of enterprise-grade applications. My expertise spans across the entire development lifecycle, from designing high-performance REST APIs with .NET Core to crafting responsive, state-managed React interfaces.
+                    </p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem; color: var(--text-secondary);">
+                        I am deeply committed to the principles of <strong style="color: var(--primary);">Clean Architecture</strong> and <strong style="color: var(--primary);">SOLID</strong>, ensuring that every line of code is maintainable, scalable, and efficient.
+                    </p>
+                    <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--primary); font-weight: 700;">
+                            <i class="fas fa-check-circle"></i> API First Design
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--primary); font-weight: 700;">
+                            <i class="fas fa-check-circle"></i> Clean Code Standards
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.75rem; color: var(--primary); font-weight: 700;">
+                            <i class="fas fa-check-circle"></i> Performance Focused
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;" class="slide-right">
+                    <div style="position: relative; width: 320px; height: 400px; margin: 0 auto;">
+                        <div style="position: absolute; inset: 0; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 24px; transform: rotate(-5deg); z-index: 1; opacity: 0.2; filter: blur(10px);"></div>
+                        <div style="position: absolute; inset: 0; background: var(--bg-card); border-radius: 24px; transform: rotate(5deg); z-index: 1; border: 1px solid var(--border); box-shadow: var(--shadow-lg);"></div>
+                        <img src="images/kavin.JPG" alt="Kavin Kumar" style="position: relative; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 20px; z-index: 2; box-shadow: var(--shadow-md); filter: contrast(1.05);" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section" style="background: var(--bg-secondary);">
+            <h2 class="section-title fade-up">Education</h2>
+            <p class="section-subtitle fade-up">Academic background and qualifications</p>
+            
+            <div class="card-grid">
+                <div class="card fade-up futuristic-card tilt-element" style="border-radius: 24px; padding: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
+                        <div style="width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <i class="fas fa-graduation-cap" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 700; font-size: 0.85rem; border: 1px solid rgba(16, 185, 129, 0.2);">
+                            7.2 CGPA
+                        </div>
+                    </div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.6rem; font-size: 1.4rem; font-weight: 800;">B.E</h3>
+                    <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem;">K.S.R Of Engineering(Autonomous)</p>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <i class="fas fa-calendar" style="color: var(--primary); width: 16px;"></i>
+                            <span>Class of 2024</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <i class="fas fa-location-dot" style="color: var(--primary); width: 16px;"></i>
+                            <span>Tiruchengode</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card fade-up futuristic-card tilt-element" style="border-radius: 24px; padding: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
+                        <div style="width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <i class="fas fa-graduation-cap" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 700; font-size: 0.85rem; border: 1px solid rgba(16, 185, 129, 0.2);">
+                            60.6 %
+                        </div>
+                    </div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.6rem; font-size: 1.4rem; font-weight: 800;">HSLC</h3>
+                    <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem;">Mangalam Higher Secondary School</p>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <i class="fas fa-calendar" style="color: var(--primary); width: 16px;"></i>
+                            <span>Class of 2020</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <i class="fas fa-location-dot" style="color: var(--primary); width: 16px;"></i>
+                            <span>Anthiyur</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card fade-up futuristic-card tilt-element" style="border-radius: 24px; padding: 2rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.5rem;">
+                        <div style="width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <i class="fas fa-graduation-cap" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 0.4rem 1rem; border-radius: 100px; font-weight: 700; font-size: 0.85rem; border: 1px solid rgba(16, 185, 129, 0.2);">
+                            72 %
+                        </div>
+                    </div>
+                    <h3 style="color: var(--text-primary); margin-bottom: 0.6rem; font-size: 1.4rem; font-weight: 800;">SSLC</h3>
+                    <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem; font-size: 1rem;">Mangalam Higher Secondary School</p>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <i class="fas fa-calendar" style="color: var(--primary); width: 16px;"></i>
+                            <span>Class of 2018</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <i class="fas fa-location-dot" style="color: var(--primary); width: 16px;"></i>
+                            <span>Anthiyur</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section">
+            <h2 class="section-title fade-up">Systems & Architecture</h2>
+            <p class="section-subtitle fade-up">A collection of professional deployments and academic engineering projects.</p>
+            
+            <div class="card-grid">
+                <!-- Project 9: Textile ERP -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/textile-erp.png" alt="Textile ERP" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: transform 0.6s ease;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'" onerror="this.src='images/project-placeholder.jpg'">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--primary); backdrop-filter: blur(8px); color: var(--text-on-dark); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid var(--border);">Professional Work</span>
+                         </div>
+                         <div style="position: absolute; bottom: 1rem; left: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                             <span style="background: var(--bg-card); backdrop-filter: blur(8px); color: var(--text-primary); padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.7rem; font-weight: 700; border: 1px solid var(--border);">ASP.NET Core</span>
+                             <span style="background: var(--bg-card); backdrop-filter: blur(8px); color: var(--text-primary); padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.7rem; font-weight: 700; border: 1px solid var(--border);">SQL Server</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Textile ERP</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">A mission-critical ERP system for end-to-end textile lifecycle management. Tracks data from raw cotton to finished cloth.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <button class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;" onclick="Swal.fire('Internal System', 'This project is hosted on a protected internal infrastructure.', 'info')">Enterprise Access <i class="fas fa-lock" style="margin-left: 6px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 1: Chess Game -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/chess.jpg" alt="Chess Game" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                         <div style="position: absolute; bottom: 1rem; left: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                             <span style="background: var(--bg-card); color: var(--text-primary); padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.7rem; border: 1px solid var(--border);">JS, HTML, CSS</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Chess Game</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">Feature-rich web-based chess game demonstrating UI design and strategic implementation skills.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/chess/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Flames -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/flames.jpg" alt="Flames" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                         <div style="position: absolute; bottom: 1rem; left: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                             <span style="background: var(--bg-card); color: var(--text-primary); padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.7rem; border: 1px solid var(--border);">JavaScript</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">FLAMES Calculator</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">Interactive FLAMES relationship calculator showcasing creative web development and tool creation.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/flames/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Feedback Form -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/feedback.png" alt="Feedback Form" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                         <div style="position: absolute; bottom: 1rem; left: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                             <span style="background: var(--bg-card); color: var(--text-primary); padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.7rem; border: 1px solid var(--border);">HTML, CSS, JS</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Interview Feedback</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">An intuitive application for collecting and analyzing interview feedback effectively.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/feedback/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Stone Paper Scissor -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/sps.jpg" alt="Stone Paper Scissor" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Stone Paper Scissor</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">Classic Stone Paper Scissors game implemented as a responsive web application.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/stonpapersiscergame/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Tic Tac Toe -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/xox.jpg" alt="Tic Tac Toe" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Tic Tac Toe</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">Dynamic Tic Tac Toe with strategic layers and captivating visuals using HTML/JS.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/xox/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Java Programs -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/java.jpg" alt="Java Programs" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                         <div style="position: absolute; bottom: 1rem; left: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                             <span style="background: var(--bg-card); color: var(--text-primary); padding: 0.3rem 0.75rem; border-radius: 8px; font-size: 0.7rem; border: 1px solid var(--border);">Java</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Java Collection</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">Diverse collection of over 50 Java programs showcasing problem-solving and programming skills.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://github.com/kavinkumarmuthusamy/javaprograms" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">View Code</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 7: Brain Puzzle -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/brain.jpg" alt="Brain Puzzle" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Brain Puzzle</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">Strategic 17-click brain puzzle game with cascading number reductions and logic challenges.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/brain/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8: Login Page -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; border-radius: 24px;">
+                    <div style="height: 220px; background: #0f172a; position: relative; overflow: hidden;">
+                         <img src="images/login.jpg" alt="Login Page" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                         <div style="position: absolute; top: 1rem; left: 1rem;">
+                             <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase;">College Project</span>
+                         </div>
+                    </div>
+                    <div style="padding: 1.75rem; flex: 1; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.3rem; font-weight: 700;">Login & Static Page</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex: 1;">User-friendly login page and static webpage focusing on privacy and seamless UX.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: auto;">
+                            <a href="https://kavinkumarmuthusamy.github.io/login/" target="_blank" class="btn btn-primary btn-sm" style="flex: 1; justify-content: center; border-radius: 12px; font-weight: 700;">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="https://github.com/kavinkumarmuthusamy" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-github"></i> View More on GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+            <h2 class="section-title fade-up">Experience</h2>
+            <p class="section-subtitle fade-up">My professional background and experience</p>
+            
+            <div style="position: relative; padding-left: 2rem;">
+                <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 3px; opacity: 0.3;"></div>
+                
+                <div style="display: grid; gap: 2.5rem;">
+                    <div class="card fade-up futuristic-card tilt-element" style="position: relative;">
+                        <!-- Timeline Dot -->
+                        <div style="position: absolute; left: -2.35rem; top: 2rem; width: 14px; height: 14px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary);"></div>
+                        
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.35rem; color: var(--text-primary);">Software Developer</h3>
+                                <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+                                    <h4 style="color: var(--primary); margin: 0; font-weight: 700;">
+                                        <i class="fas fa-building" style="font-size: 0.9rem; margin-right: 4px;"></i> Sakthi Infra Tex
+                                    </h4>
+                                    <span style="width: 4px; height: 4px; background: var(--text-secondary); border-radius: 50%; opacity: 0.4;"></span>
+                                    <span style="color: var(--text-secondary); font-size: 0.9rem; font-weight: 600;">Product Based Company</span>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="background: rgba(99, 102, 241, 0.1); color: var(--primary); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; border: 1px solid rgba(99, 102, 241, 0.2);">
+                                    <i class="far fa-calendar-alt" style="margin-right: 6px;"></i> June 2024 - Present
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 1.25rem; background: rgba(0,0,0,0.02); border-radius: 12px; border: 1px solid rgba(0,0,0,0.03);">
+                             <p style="line-height: 1.7; color: var(--text-secondary); margin: 0;">Working as a Software Developer, specializing in ASP.NET Core and Enterprise applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+            <h2 class="section-title fade-up">Core Expertise</h2>
+            <p class="section-subtitle fade-up">Specialized in full-stack engineering and enterprise architecture</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-top: 3.5rem;">
+                <!-- Backend -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 2.75rem; border-radius: 32px; background: var(--bg-card);">
+                    <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2.5rem;">
+                        <div style="width: 14px; height: 14px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 15px var(--primary);"></div>
+                        <h3 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Backend</h3>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <div class="skill-item"><i class="fas fa-cube"></i> .NET 8</div>
+                        <div class="skill-item"><i class="fas fa-code-branch"></i> MVC</div>
+                        <div class="skill-item"><i class="fas fa-server"></i> Web API</div>
+                        <div class="skill-item"><i class="fas fa-database"></i> EF Core</div>
+                    </div>
+                </div>
+
+                <!-- Frontend -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 2.75rem; border-radius: 32px; background: var(--bg-card);">
+                    <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2.5rem;">
+                        <div style="width: 14px; height: 14px; background: var(--secondary); border-radius: 50%; box-shadow: 0 0 15px var(--secondary);"></div>
+                        <h3 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Frontend</h3>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <div class="skill-item"><i class="fab fa-react"></i> React</div>
+                        <div class="skill-item"><i class="fab fa-css3"></i> Tailwind</div>
+                        <div class="skill-item"><i class="fab fa-js"></i> JavaScript</div>
+                        <div class="skill-item"><i class="fab fa-bootstrap"></i> Bootstrap</div>
+                    </div>
+                </div>
+
+                <!-- Database -->
+                <div class="card fade-up futuristic-card tilt-element" style="padding: 2.75rem; border-radius: 32px; background: var(--bg-card);">
+                    <div style="display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2.5rem;">
+                        <div style="width: 14px; height: 14px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent);"></div>
+                        <h3 style="margin: 0; font-size: 1.6rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.1em;">Database</h3>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <div class="skill-item"><i class="fas fa-database"></i> SQL Server</div>
+                        <div class="skill-item"><i class="fas fa-database"></i> PostgreSQL</div>
+                        <div class="skill-item"><i class="fas fa-database"></i> Oracle</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <style>
+            .skill-item {
+                background: rgba(99, 102, 241, 0.08); 
+                border: 1px solid rgba(99, 102, 241, 0.15); 
+                padding: 0.85rem 1.4rem; 
+                border-radius: 16px; 
+                display: flex; 
+                align-items: center; 
+                gap: 1rem; 
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+                cursor: default; 
+                backdrop-filter: blur(5px);
+                color: var(--text-primary);
+                font-weight: 700;
+            }
+            .skill-item i { color: var(--primary); }
+            .skill-item:hover {
+                background: rgba(99, 102, 241, 0.18); 
+                border-color: rgba(99, 102, 241, 0.5); 
+                transform: translateY(-5px) scale(1.05); 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            }
+        </style>
+
+        <!-- Certificates Section -->
+        <section id="certificate" class="section">
+            <h2 class="section-title fade-up">Certifications</h2>
+            <p class="section-subtitle fade-up">Professional certifications and achievements</p>
+            
+            <div class="card-grid">
+                <!-- Cert 1: Wipro -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Java Full Stack</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">WIPRO</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1Iso68eIRfs-p9MLUxLaWx-UoUgsuVPm1/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 2: Ethical Hacking -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Ethical Hacking</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Udemy</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1NNEEituZlbqC2aj2SGDX_l3p3sDDMkhI/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 3: JS for Beginners -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">JavaScript</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Udemy</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1yQD5WE0N4_FvJQ2ZJjJ19b6X1gGzj38i/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 4: CSS, JS & PHP -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">CSS, JS & PHP</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Udemy</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1nPz-9Xgy4eOg4zz6cIxwe0PZJ_h1jUgm/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 5: Cybersecurity -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Cybersecurity</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Cisco</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1SmVsrwCqC6Y6NzX2ivhYySEmJcGvXK2p/view" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 6: Code Debugging -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Code Debugging</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">UDHYAM'23</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1pRaptyQ_AKMYqAmt092ESGZxEDMBIaZg/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 7: Paper Presentation -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Paper Presentation</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">ASTHRA</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1YEz8I4r8ZWERFkWTWEoy2thAPubMQ7tC/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 8: Web Designing -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Web Designing</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">ASTHRA 2022</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1WkIKoLhCBUNJjlYtn5UJAOG8le7IJWUp/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 9: Karate Mitsuya-Kai -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Karate-Do India</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Mitsuya-Kai</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1QC7Y04F1zOKfPUjQx_58mZlXc0WPLtof/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 10: Handwriting -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">State Handwriting</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Brainobrain</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1w9kRanuYA4D1V5GzBjTI4yV7JjKcvZbg/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 11: Karate Green Belt -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Karate - Green Belt</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Mitsuya-Kai</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1AHvDflP-KnBz6nXPaEWRLIXTpFRCfUNZ/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 12: Hindi Prathamic -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">Hindi - Prathamic</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">DBHP Sabha</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/181wqeZKy2ownZaPD6pa_xu9uwIoXWWP3/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+
+                <!-- Cert 13: Schooling Achievement -->
+                <div class="card scale-in futuristic-card" style="padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; border-radius: 24px;">
+                    <div>
+                        <div style="display: flex; gap: 1rem; align-items: start; margin-bottom: 1.5rem;">
+                             <div style="min-width: 50px; height: 50px; background: rgba(99, 102, 241, 0.1); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                                <i class="fas fa-award" style="font-size: 1.5rem;"></i>
+                             </div>
+                             <div>
+                                 <h3 style="font-size: 1.15rem; margin: 0; line-height: 1.4; font-weight: 800; color: var(--text-primary);">School Achievement</h3>
+                                 <p style="font-size: 0.9rem; color: var(--primary); margin: 6px 0 0 0; font-weight: 700; letter-spacing: 0.5px;">Various</p>
+                             </div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1M8ieePIcTfVIaYu0CEml_0sIHZeEEB48/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline btn-block" style="justify-content: center; font-size: 0.85rem; padding: 0.75rem; border-radius: 12px; font-weight: 700;">Verify</a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section" style="background: var(--bg-secondary);">
+            <h2 class="section-title fade-up">Get In Touch</h2>
+            <p class="section-subtitle fade-up">Have a question or want to work together?</p>
+            
+            <div style="max-width: 600px; margin: 0 auto;">
+                <form id="contactForm" class="scale-in" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" id="contactName" class="form-input" placeholder="John Doe" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Your Email</label>
+                        <input type="email" id="contactEmail" class="form-input" placeholder="john@example.com" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea id="contactMessage" class="form-textarea" placeholder="Your message here..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+
+                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+                    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Other ways to reach me:
+                    </p>
+                    <div style="display: flex; justify-content: center; gap: 1.5rem;">
+                        <a href="mailto:kavinkumarm.dev@gmail.com" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-envelope"></i> Email
+                        </a>
+                        <a href="https://wa.me/916383728267" class="btn btn-sm btn-secondary" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" style="margin-top: 2rem; background: rgba(59, 130, 246, 0.1); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2); display: flex; align-items: center; gap: 1rem;">
+                <i class="fas fa-question-circle" style="color: var(--info); font-size: 1.5rem;"></i>
+                <span style="color: var(--text-primary);">If you have any questions, feel free to contact me at <strong>kavinkumarm.dev@gmail.com</strong> or call <strong>6383728267</strong></span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: rgba(2, 6, 23, 0.95); border-top: 1px solid rgba(255,255,255,0.05); padding: 5rem 2rem; color: #fff;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <a href="#" class="navbar-brand" style="font-size: 2rem; margin-bottom: 2rem; color: #fff;">KavinKumar</a>
+            
+            <ul style="display: flex; gap: 2.5rem; list-style: none; margin-bottom: 3rem; flex-wrap: wrap; justify-content: center; padding: 0;">
+                <li><a href="#home" style="color: #94a3b8; text-decoration: none; font-weight: 500; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Home</a></li>
+                <li><a href="#about" style="color: #94a3b8; text-decoration: none; font-weight: 500; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">About</a></li>
+                <li><a href="#projects" style="color: #94a3b8; text-decoration: none; font-weight: 500; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Systems</a></li>
+                <li><a href="#contact" style="color: #94a3b8; text-decoration: none; font-weight: 500; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;">Contact</a></li>
+            </ul>
+
+            <div style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); margin-bottom: 3rem;"></div>
+
+            <div style="display: flex; justify-content: space-between; width: 100%; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <p style="color: #94a3b8; font-size: 0.85rem; margin: 0;">&copy; 2026 Kavin Kumar. Architected for Performance.</p>
+                <div style="display: flex; gap: 1.5rem;">
+                    <a href="https://wa.me/916383728267" style="color: #94a3b8;" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="mailto:kavinkumarm.dev@gmail.com" style="color: #94a3b8;" title="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleNav() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById('customCursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if(cursor) cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                if(cursor) cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const h = document.documentElement;
+            const b = document.body;
+            const st = 'scrollTop';
+            const sh = 'scrollHeight';
+            const percent = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+            const progress = document.getElementById('scrollProgress');
+            if(progress) progress.style.width = percent + '%';
+        });
+
+        // 3D Tilt Effect
+        document.querySelectorAll('.tilt-element').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (centerY - y) / 15;
+                const rotateY = (x - centerX) / 15;
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+            });
+
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)`;
+            });
+        });
+
+        // Magnetic Effect
+        document.querySelectorAll('.magnetic').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                el.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+            });
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `translate(0, 0)`;
+            });
+        });
+
+        // Smooth scroll refinement
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const navLinks = document.getElementById('navLinks');
+                    if(navLinks) navLinks.classList.remove('active');
+                }
+            });
+        });
+
+        // Animation Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-up, .slide-left, .slide-right, .scale-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Contact Form
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                icon: 'success',
+                title: 'Message Sent!',
+                text: 'This is a demo. In a live version, this would be sent to your email.',
+                confirmButtonColor: '#6366f1'
+            });
+            this.reset();
+        });
+    </script>
+</body>
+</html>
